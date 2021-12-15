@@ -5,8 +5,6 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
-  await app.listen(process.env.PORT || 3000);
   const config = new DocumentBuilder()
     .setTitle("Task Management")
     .setDescription("The task API description")
@@ -16,6 +14,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app, document);
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors();
+  await app.listen(process.env.PORT || 3000);
 }
 
 bootstrap();
