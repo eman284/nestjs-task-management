@@ -35,7 +35,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
 
-  await app.listen(process.env.PORT || 300);
+  await app.listen(process.env.PORT || 3000);
 
   logger.log(`Application listen in port ${port}`);
 }
