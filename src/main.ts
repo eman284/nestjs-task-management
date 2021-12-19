@@ -7,7 +7,7 @@ import { TransformInterceptor } from "./transform.interceptor";
 async function bootstrap() {
   const logger = new Logger();
   const app = await NestFactory.create(AppModule);
-  const port = 3000;
+  const port = process.env.PORT;
   const config = new DocumentBuilder()
     .setTitle("Task Management")
     .setDescription("The task API description")
@@ -21,7 +21,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
   app.enableCors();
-  await app.listen(process.env.PORT || port);
+  await app.listen(port);
   logger.log(`Application listen in port ${port}`);
 }
 
