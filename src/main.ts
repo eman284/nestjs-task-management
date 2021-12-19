@@ -9,9 +9,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = new Logger();
   const configService = app.get(ConfigService);
-  const port = configService.get("PORT");
   const isDevelopment = configService.get("STAGE") === "development";
-
+  const port: number = parseInt(`${process.env.PORT}`) || 3000;
   app.enableCors();
 
   const documentBuilder = new DocumentBuilder()
@@ -35,7 +34,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
 
-  await app.listen(process.env.PORT || 3000);
+  await app.listen(port);
 
   logger.log(`Application listen in port ${port}`);
 }
