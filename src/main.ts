@@ -12,9 +12,9 @@ async function bootstrap() {
     .setTitle("Task Management")
     .setDescription("The task API description")
     .setExternalDoc("/api-json", "/api-json")
+    .addBearerAuth()
     .addServer(`http://localhost:${port}`)
     .setVersion("1.0")
-    .addTag("Task")
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app, document);

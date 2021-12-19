@@ -14,8 +14,7 @@ export class TasksService {
     private taskRepository: TasksRepository
   ) {
   }
-
-
+  
   getTasks(filterDto: GetTaskFilterDto, user: User): Promise<Task[]> {
     return this.taskRepository.getTasks(filterDto, user);
   }

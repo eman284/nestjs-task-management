@@ -7,8 +7,11 @@ import { AuthGuard } from "@nestjs/passport";
 import { GetUser } from "../auth/get-user.decorator";
 import { User } from "../auth/user.entity";
 import { UpdateTaskStatusDto } from "./dto/update-task-status.dto";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
 @Controller("tasks")
+@ApiTags("Tasks")
+@ApiBearerAuth()
 @UseGuards(AuthGuard())
 export class TasksController {
   private logger = new Logger("Tasks Controller");
