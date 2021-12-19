@@ -10,7 +10,7 @@ async function bootstrap() {
   const logger = new Logger();
   const configService = app.get(ConfigService);
   const port = configService.get("PORT");
-  const isDevelopment = configService.get("NODE_ENV") === "development";
+  const isDevelopment = configService.get("STAGE") === "development";
 
   app.enableCors();
 
