@@ -1,10 +1,11 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
-import { ValidationPipe } from "@nestjs/common";
+import { Logger, ValidationPipe } from "@nestjs/common";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { TransformInterceptor } from "./transform.interceptor";
 
 async function bootstrap() {
+  const logger = new Logger();
   const app = await NestFactory.create(AppModule);
   const port = 3000;
   const config = new DocumentBuilder()
@@ -19,9 +20,9 @@ async function bootstrap() {
   SwaggerModule.setup("api", app, document);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
-  await app.listen(port);
   app.enableCors();
-  await app.listen(process.env.PORT || 3000);
+  await app.listen(process.env.PORT || port);
+  logger.log(`Application listen in port ${port}`);
 }
 
 bootstrap();

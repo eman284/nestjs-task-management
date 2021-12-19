@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Logger, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
 import { TasksService } from "./tasks.service";
 import { Task } from "./task.entity";
 import { CreateTaskDto } from "./dto/create-task.dto";
@@ -11,11 +11,13 @@ import { UpdateTaskStatusDto } from "./dto/update-task-status.dto";
 @Controller("tasks")
 @UseGuards(AuthGuard())
 export class TasksController {
+  private logger = new Logger("Tasks Controller");
   constructor(private taskService: TasksService) {
   }
 
   @Get()
   getTasks(@Query() filterDto: GetTaskFilterDto, @GetUser() user: User): Promise<Task[]> {
+    this.logger.verbose(`${user.username} retrieving all tasks. Filters:${JSON.stringify(filterDto)} `);
     return this.taskService.getTasks(filterDto, user);
   }
 
@@ -26,6 +28,7 @@ export class TasksController {
 
   @Post()
   createTask(@Body() createTaskDto: CreateTaskDto, @GetUser() user: User): Promise<Task> {
+    this.logger.verbose(`User "${user.username}". Data:${JSON.stringify(createTaskDto)}`);
     return this.taskService.creatTask(createTaskDto, user);
   }
 
