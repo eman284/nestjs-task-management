@@ -7,7 +7,7 @@ import { configValidationSchema } from "./auth/config.schema";
 
 @Module({
   imports: [ConfigModule.forRoot({
-    envFilePath: [`environments/.env.stage.${process.env.STAGE}`],
+    envFilePath: [`environments/.env.${process.env.STAGE}`],
     validationSchema: configValidationSchema
   }), TasksModule, TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
