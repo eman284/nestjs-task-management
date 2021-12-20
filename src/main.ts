@@ -19,7 +19,7 @@ async function bootstrap() {
     .setDescription("The Task Management API")
     .setVersion("1.0")
     .setExternalDoc("api-json", "api-json")
-    .addBasicAuth();
+    .addBearerAuth();
 
   documentBuilder
     .addServer("https://task-management-nestjsapi.herokuapp.com");
