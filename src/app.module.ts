@@ -1,15 +1,15 @@
 import { Module } from "@nestjs/common";
-import { TasksModule } from "./tasks/tasks.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AuthModule } from "./auth/auth.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { configValidationSchema } from "./auth/config.schema";
+import { TasksModule } from "./tasks/tasks.module";
 
 @Module({
   imports: [ConfigModule.forRoot({
     envFilePath: [`environments/.env.stage.${process.env.STAGE}`],
     validationSchema: configValidationSchema
-  }), TasksModule, TypeOrmModule.forRootAsync({
+  }), TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
     inject: [ConfigService],
     useFactory: (configService: ConfigService) => {
@@ -23,6 +23,7 @@ import { configValidationSchema } from "./auth/config.schema";
           ssl: isProduction ? { rejectUnauthorized: false } : null
         },
         type: "postgres",
+        entities: ["**/*.entity{ .ts,.js}"],
         autoLoadEntities: true,
         synchronize: true,
         host: configService.get("DB_HOST"),
@@ -34,7 +35,7 @@ import { configValidationSchema } from "./auth/config.schema";
 
     }
   })
-    , AuthModule],
+    , TasksModule, AuthModule],
   controllers: [],
   providers: []
 })
