@@ -7,7 +7,7 @@ import { TasksModule } from "./tasks/tasks.module";
 
 @Module({
   imports: [ConfigModule.forRoot({
-    envFilePath: [`environments/.env.stage.${process.env.STAGE}`],
+    envFilePath: [`environments/.env.${process.env.STAGE}`],
     validationSchema: configValidationSchema
   }), TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
