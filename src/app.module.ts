@@ -4,7 +4,7 @@ import { AuthModule } from "./auth/auth.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { configValidationSchema } from "./auth/config.schema";
 import { TasksModule } from "./tasks/tasks.module";
-import { UserModule } from './user/user.module';
+import { UserModule } from "./user/user.module";
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -20,6 +20,7 @@ import { UserModule } from './user/user.module';
         // secure connection
         ssl: isProduction,
         //
+        url: isProduction ? process.env.DB_URLDATABASE_URL : null,
         extra: {
           ssl: isProduction ? { rejectUnauthorized: false } : null
         },
