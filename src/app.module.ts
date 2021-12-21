@@ -20,7 +20,7 @@ import { UserModule } from "./user/user.module";
         // secure connection
         ssl: isProduction,
         //
-        url: isProduction ? process.env.DB_URLDATABASE_URL : null,
+        url: isProduction ? configService.get("DB_URL") : null,
         extra: {
           ssl: isProduction ? { rejectUnauthorized: false } : null
         },
