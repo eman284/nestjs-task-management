@@ -15,7 +15,6 @@ import { UserModule } from "./user/user.module";
     inject: [ConfigService],
     useFactory: (configService: ConfigService) => {
       const isProduction = configService.get("STAGE") === "prod";
-
       return {
         // secure connection
         ssl: isProduction,
