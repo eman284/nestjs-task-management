@@ -3,11 +3,11 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class AuthCredentialsDto {
   @IsString()
-  @MinLength(4)
-  @MaxLength(20)
+  @MinLength(5)
+  @MaxLength(50)
   @IsNotEmpty()
   @ApiProperty()
-  username: string;
+  usernameOrEmail: string;
 
   @IsString()
   @MinLength(8)

@@ -4,6 +4,7 @@ import { AuthModule } from "./auth/auth.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { configValidationSchema } from "./auth/config.schema";
 import { TasksModule } from "./tasks/tasks.module";
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -35,7 +36,7 @@ import { TasksModule } from "./tasks/tasks.module";
 
     }
   })
-    , TasksModule, AuthModule],
+    , TasksModule, AuthModule, UserModule],
   controllers: [],
   providers: []
 })
