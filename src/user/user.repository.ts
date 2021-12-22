@@ -10,15 +10,29 @@ export class UserRepository extends Repository<User> {
     const { username, password, email, phone } = userDto;
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
+    // where ==> [{}] ==> conditions with OR
+    // where ==> {} ==> conditions with AND
+    const existingUsers = await this.find({ where: [{ username }, { email }, { phone }] });
+    if (existingUsers?.length) {
+      const errors = [];
+      if (existingUsers.some(user => user.username === username)) {
+        errors.push("username");
+      }
+      if (existingUsers.some(user => user.email === email)) {
+        errors.push("email");
+      }
+      if (existingUsers.some(user => user.phone === phone)) {
+        errors.push("phone");
+      }
+      throw new ConflictException(`${errors.join(", ")} already exit !`);
+    }
+
     const user = this.create({ username, password: hashedPassword, email, phone });
 
     try {
       await this.save(user);
     } catch (error) {
-      if (error.code === "23505")
-        throw new ConflictException("Username already exit !");
-      else
-        throw new InternalServerErrorException();
+      throw new InternalServerErrorException();
     }
   }
 }
