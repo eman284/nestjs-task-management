@@ -13,10 +13,10 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ unique: true })
+  @Column({ unique: false, default: "eng" })
   email: string;
 
-  @Column({ unique: true })
+  @Column({ unique: false, default: "0121213334343" })
   phone: string;
 
   //create column default value
