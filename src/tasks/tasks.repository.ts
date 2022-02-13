@@ -4,7 +4,7 @@ import { CreateTaskDto } from "./dto/create-task.dto";
 import { TaskStatus } from "./task-status.enum";
 import { GetTaskFilterDto } from "./dto/get-task-filter.dto";
 import { User } from "../user/entities/user.entity";
-import { ConflictException, InternalServerErrorException, Logger } from "@nestjs/common";
+import { InternalServerErrorException, Logger } from "@nestjs/common";
 
 @EntityRepository(Task)
 export class TasksRepository extends Repository<Task> {
@@ -25,7 +25,7 @@ export class TasksRepository extends Repository<Task> {
       const tasks = await query.getMany();
       return tasks;
     } catch (error) {
-      // error.stack = appear part of code where error exist
+      //error.stack = appear part of code where error exist
       this.logger.verbose(`Faild to get tasks for user "${user.username}". Filters: ${JSON.stringify(filterDto)}`, error.stack);
       throw new InternalServerErrorException();
     }
@@ -35,11 +35,6 @@ export class TasksRepository extends Repository<Task> {
 
   async creatTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
     const { title, description } = createTaskDto;
-    // count if search one filed
-    const existTask = this.count({ where: { title, user } });
-    if (existTask) {
-      throw new ConflictException("Title already exist !");
-    }
     const task = this.create({
       title,
       description,

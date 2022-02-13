@@ -6,7 +6,7 @@ import { GetTaskFilterDto } from "./dto/get-task-filter.dto";
 import { AuthGuard } from "@nestjs/passport";
 import { GetUser } from "../auth/get-user.decorator";
 import { User } from "../user/entities/user.entity";
-import { UpdateTaskStatusDto } from "./dto/update-task-status.dto";
+import { UpdateTaskStatusModel } from "./dto/update-task-status.model";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
 @Controller("tasks")
@@ -42,7 +42,7 @@ export class TasksController {
 
 
   @Patch("/:id/status")
-  updateTask(@Param("id") id: string, @Body() updateTaskStatusDto: UpdateTaskStatusDto, @GetUser() user: User): Promise<Task> {
+  updateTask(@Param("id") id: string, @Body() updateTaskStatusDto: UpdateTaskStatusModel, @GetUser() user: User): Promise<Task> {
     const { status } = updateTaskStatusDto;
     return this.taskService.updateTaskStatus(id, status, user);
   }
