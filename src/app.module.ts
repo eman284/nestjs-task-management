@@ -6,6 +6,7 @@ import { configValidationSchema } from "./auth/config.schema";
 import { TasksModule } from "./tasks/tasks.module";
 import { UserModule } from "./user/user.module";
 import { PostModule } from "./post/post.module";
+import { PageModule } from './page/page.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -37,7 +38,7 @@ import { PostModule } from "./post/post.module";
 
     }
   })
-    , TasksModule, AuthModule, UserModule, PostModule],
+    , TasksModule, AuthModule, UserModule, PostModule, PageModule],
   controllers: [],
   providers: []
 })
